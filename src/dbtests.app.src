@@ -1,0 +1,12 @@
+{application, dbtests,
+ [
+  {description, ""},
+  {vsn, "1"},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib
+                 ]},
+  {mod, { dbtests_app, []}},
+  {env, []}
+ ]}.
