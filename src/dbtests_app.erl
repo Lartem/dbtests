@@ -10,7 +10,8 @@
 %% ===================================================================
 
 start(_StartType, _StartArgs) ->
-    dbtests_sup:start_link().
+    dbtests_sup:start_link(),
+    bench:start().
 
 stop(_State) ->
     ok.
