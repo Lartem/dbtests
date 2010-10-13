@@ -11,7 +11,7 @@
 
 start() ->
   emongo:add_pool(test_pool, "localhost", 27017, "test", 10),
-  
+  io:format("Let the benchmarks begin...",[]),
   spawn(?MODULE,loop,[
       [
         {emongo_bench,start2k,[]},

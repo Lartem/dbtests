@@ -7,9 +7,6 @@
                   kernel,
                   stdlib
                  ]},
-  {mod, { dbtests_app, [
-    bench
-    ,emongo_bench
-  ]}},
+  {mod, { dbtests_app, []}},
   {env, []}
  ]}.
