@@ -17,7 +17,8 @@ start() ->
 %        {emongo_bench,start16k}
         {couch_bench,start2k},
         {couch_bench,start16k}
-
+%				{riak_bench,start2k},
+%				{riak_bench,start16k}
       ],0,0
     ]).
 
