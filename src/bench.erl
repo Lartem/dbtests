@@ -13,7 +13,10 @@ start() ->
   emongo:add_pool(test_pool, "localhost", 27017, "test", 10),
   
   spawn(?MODULE,loop,[
-      [{emongo_bench,start2k}],0,0
+      [
+        {emongo_bench,start2k,[]},
+        {emongo_bench,start16k,[]}
+      ],0,0
     ]).
 
 loop(Remaining, WorkersRemaining, StartTime) ->
