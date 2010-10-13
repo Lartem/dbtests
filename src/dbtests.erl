@@ -18,7 +18,10 @@ ensure_started(App) ->
 %% @doc Start the gangs server.
 start() ->
     dbtests_deps:ensure(),
-    ensure_started(emongo),
+
+%    ensure_started(emongo),
+%    emongo:add_pool(emongopool, "localhost", 27017, "test", 10),
+
     application:start(dbtests).
 
 %% @spec stop() -> ok

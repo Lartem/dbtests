@@ -1,4 +1,4 @@
--module(emongo_bench).
+-module(couch_bench).
 
 -include("docs.hrl").
 
@@ -20,7 +20,7 @@ start16k(Pid) ->
 insert(Document, Count, Pid) ->
   if 
     Count =/= 0 ->
-      emongo:insert_sync(emongopool, "test_collection", [{"content", Document}]),
+      erlang_couchdb:create_document({"localhost", 5984}, "bench", [{<<"content">>, Document}]),
       if 
         (Count rem 100) =:= 0 -> io:format(".");
         true -> ok
@@ -30,3 +30,4 @@ insert(Document, Count, Pid) ->
     true -> 
       Pid ! done
   end.
+

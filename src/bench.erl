@@ -10,37 +10,34 @@
 %% ===================================================================
 
 start() ->
-  emongo:add_pool(test_pool, "localhost", 27017, "test", 10),
-  io:format("Let the benchmarks begin...",[]),
+  io:format("Let the benchmarks begin...~n",[]),
   spawn(?MODULE,loop,[
       [
-        {emongo_bench,start2k,[]},
-        {emongo_bench,start16k,[]}
+%        {emongo_bench,start2k},
+%        {emongo_bench,start16k}
+        {couch_bench,start2k},
+        {couch_bench,start16k}
+
       ],0,0
     ]).
 
 loop(Remaining, WorkersRemaining, StartTime) ->
   {_,Sec,MicroSec} = now(),
-  Time = Sec*1000000+MicroSec,
-
+  Time = Sec*1000000.0+MicroSec,
   if
     WorkersRemaining =:= 0 ->
       if 
         StartTime =/= 0 ->
-          io:format("Time ~fmsec~n",[Time-StartTime])
+          io:format("~nTime ~fsec~n",[(Time-StartTime)/1000000.0]);
+        true -> true
       end,
 
-      [ {Module, Function, Args} | Tail ] = Remaining,
+      [ {Module, Function } | Tail ] = Remaining,
+      Args = [self()],
 
-      case Tail of
-        [] -> true;
-
-        _ ->
-          io:format("~p:~p~n",[Module, Function]),
-          startWorkers(Module,Function, Args, ?WORKERS_COUNT),
-          loop(Remaining, ?WORKERS_COUNT, Time)
-      end;
-
+      io:format("~p:~p~n",[Module, Function]),
+      startWorkers(Module,Function, Args, ?WORKERS_COUNT),
+      loop(Tail, ?WORKERS_COUNT, Time);
 
     true ->
       receive
